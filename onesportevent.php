@@ -5,13 +5,14 @@
  * Description: WordPress Plugin to display Sport events from OneSportEvent.com using their API.
  * Author: sporty - sport@onesportevent.com
  * Author URI: www.OneSportEvent.com/AboutUs.aspx
- * Version: 1.0
+ * Version: 1.0.1
  * 
  * CHANGELOG
- * 1.0 - INFO  - Added to WordPress Plugin repository
- * 0.3 - ADDED - parameter clubID and additional parameters string
- * 0.2 - ADDED - parameters oseAreaLevel and oseAreaID
- * 0.1 - Initial version
+ * 1.0.1 - ADDED - Screenshot of admin page
+ * 1.0   - INFO  - Added to WordPress Plugin repository
+ * 0.3   - ADDED - parameter clubID and additional parameters string
+ * 0.2   - ADDED - parameters oseAreaLevel and oseAreaID
+ * 0.1   - Initial version
  */
 
 /**
