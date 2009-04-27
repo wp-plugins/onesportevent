@@ -3,7 +3,7 @@ Contributors: www.OneSportEvent.com/AboutUs.aspx
 Tags: onesportevent, sport, event
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 WordPress Plugin to display Sport events from OneSportEvent.com using their API.
 
