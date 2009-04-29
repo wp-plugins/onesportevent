@@ -5,9 +5,11 @@
  * Description: WordPress Plugin to display Sport events from OneSportEvent.com using their API.
  * Author: sporty - sport@onesportevent.com
  * Author URI: www.OneSportEvent.com/AboutUs.aspx
- * Version: 1.0.1
+ * Version: 1.0.2
  * 
  * CHANGELOG
+ * 1.0.2 - ADDED - Detailed documentation - readme.doc
+ *         FIXED - Minor fix to the API call
  * 1.0.1 - ADDED - Screenshot of admin page
  * 1.0   - INFO  - Added to WordPress Plugin repository
  * 0.3   - ADDED - parameter clubID and additional parameters string
@@ -77,12 +79,18 @@ if( !class_exists('OneSportEvent') )
 			}
 
 			$optional_parameters_boolean = array('activityPanel','eventPanel','stylePanel','datePanel','searchPanel','includeCrumb','includeAreas');
-			$optional_parameters = array('oseActivities','oseEvents','oseStyles','afterDate','pageNo','perPage','keyWord', 'clubID');
+			$optional_parameters_integer = array('pageNo','perPage');
+			$optional_parameters = array('oseActivities','oseEvents','oseStyles','afterDate','keyWord', 'clubID');
 
 			$optional_string = '';
 
 			foreach($optional_parameters_boolean as $param) {
 				$optional_string .= $param . (($settings[$param]) ? " : true" : " : false") . ", ";
+			}
+			foreach($optional_parameters_integer as $param) {
+				if($settings[$param] != '') {
+					$optional_string .= $param . " : " . $settings[$param] . ", ";
+				}
 			}
 			foreach($optional_parameters as $param) {
 				if($settings[$param] != '') {
@@ -90,7 +98,7 @@ if( !class_exists('OneSportEvent') )
 				}
 			}
 			if($settings['oseAreaLevel'] != '') {
-				$optional_string .= "oseAreaLevel : '" . $settings['oseAreaLevel'] . "', oseAreaID : '". $settings['oseAreaID'] . "'";
+				$optional_string .= "oseAreaLevel : '" . $settings['oseAreaLevel'] . "', oseAreaID : ". $settings['oseAreaID'];
 			} else {
 				$optional_string = substr($optional_string, 0, -2);
 			}
@@ -180,7 +188,7 @@ if( !class_exists('OneSportEvent') )
 			$settings = array();
 			$this->getSettings($settings);
 
-			if(!empty($this->message)) { echo '<!-- Last Message --><div id="message" class="updated fade">'.stripslashes($this->message).'</div>'; } else { echo '<div id="message" class="updated" style="display: none;"></div>'; }
+			if(!empty($this->message)) { echo '<!-- Last Message --><div id="message" class="updated fade"><p style="color:green;">'.stripslashes($this->message).'</p></div>'; } else { echo '<div id="message" class="updated" style="display: none;"></div>'; }
 ?>
 			<form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
 				<div class="wrap">
