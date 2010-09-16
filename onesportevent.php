@@ -5,13 +5,18 @@
  * Description: WordPress Plugin to display Sport events from OneSportEvent.com using their API.
  * Author: sporty - sport@onesportevent.com
  * Author URI: www.OneSportEvent.com/AboutUs.aspx
- * Version: 1.0.2
+ * Version: 2.2
  * 
  * CHANGELOG
- * 1.0.2 - ADDED - Detailed documentation - readme.doc
+ * 2.2   - Improved admin screen - reminder message added so people know they have to click 'create page'
+ * 2.1   - UPDAT - Improved on screen instructions
+ * 2.0	 - INFO  - Updated in WordPress Plugin repository, works with OneSportEvent API Version 4.
+ * 1.1   - ADDED - Ability to create event page via plugin admin page
+ *       - UPDAT - Updated API urls
+ * 1.0   - ADDED - Detailed documentation - readme.doc
  *         FIXED - Minor fix to the API call
- * 1.0.1 - ADDED - Screenshot of admin page
- * 1.0   - INFO  - Added to WordPress Plugin repository
+ * 0.9   - ADDED - Screenshot of admin page
+ * 0.8   - INFO  - Added to WordPress Plugin repository
  * 0.3   - ADDED - parameter clubID and additional parameters string
  * 0.2   - ADDED - parameters oseAreaLevel and oseAreaID
  * 0.1   - Initial version
@@ -71,9 +76,14 @@ if( !class_exists('OneSportEvent') )
 			if (is_feed()) {
 				return;
 			}
-			echo "<!-- OneSportEvent Plugin - stylesheet and API link. -->\n";
+
 			$settings = array();
 			$this->getSettings($settings);
+
+			$list = explode(',', $settings['postId']);
+			if((!is_page($list)) && (!is_single($list))) { return; }
+
+			echo "<!-- OneSportEvent Plugin - stylesheet and API link. -->\n";
 			if($settings['stylesheet'] != '') {
 				echo "<link rel='stylesheet' href='" . $settings['stylesheet'] . "' type='text/css' media='screen' />\n";
 			}
@@ -125,10 +135,10 @@ if( !class_exists('OneSportEvent') )
 			$settings = unserialize(get_option('onesportevent_settings'));
 			// Default Values
 			if($settings['path'] == '') {
-				$settings['path'] = 'http://onesportevent.com/API/v2/EventAPI.aspx';
+				$settings['path'] = 'http://api.onesportevent.com/api/event/v5/EventAPI.aspx';
 			}
 			if($settings['stylesheet'] == '') {
-				$settings['stylesheet'] = 'http://onesportevent.com/API/v2/Styles/oseDefault.css';
+				$settings['stylesheet'] = 'http://api.onesportevent.com/api/style/v1/css/osestyle.css';
 			}
 
 			return;
@@ -150,16 +160,72 @@ if( !class_exists('OneSportEvent') )
 			$output .= '</select>';
 			return $output;
 		}
-
+		
+				function create_page(){
+			
+			$settings = array();
+			$this->getSettings($settings);
+			$findme   = 'id="oseEventCanvas"';
+			$page_set = 0;
+			$sql_check_page="SELECT * FROM wp_posts where post_type='page' and id='".$settings['postId']."' 
+							 and post_status='publish' ";
+			$result_check_page=mysql_query($sql_check_page);
+			while($row_check_page=mysql_fetch_array($result_check_page)){
+			
+					$mystring = $row_check_page['post_content'];
+					$pos = strpos($mystring, $findme);
+					// Note our use of ===.  Simply == would not work as expected
+					// because the position of 'a' was the 0th (first) character.
+					if ($pos > 0) {
+    					$page_set = 1;
+					}	
+				}
+			if($page_set == 0){
+				echo "<div id='message' class='updated fade'>
+					  <p><b>OneSportEvents is installed</b>.  You'll need to <a href='options-general.php?page=onesportevent/onesportevent.php'>create a page</a> and configure any optional parameters before your events will display on your website.  You can also see a <a href='http://api.onesportevent.com/api/event/video'>video</a> on how to configure the optional parameters.
+</p>
+					  </div>";
+			}
+		}
+		
 		function manageSettings() {
 
 			// Variables
 			$base_name = plugin_basename('onesportevent/onesportevent.php');
 			$base_page = 'admin.php?page='.$base_name;
 
+			$settings = array();
+			$this->getSettings($settings);
+
+			$autosave = false;
+			// Place below getSettings purposefully.
+			if(!empty($_POST['create'])) {
+				$title = 'Upcoming Sporting Events';
+				$content = '<div id="oseEventCanvas"><!-- This is the event placeholder, do not remove this tag --></div>';
+				$type = 'page';
+		        $post_id = wp_insert_post(array(
+					'post_type'		=> $type,
+        		    'post_title'    => $title,
+		            'post_content'  => $content,
+		            'post_status'   => 'publish',
+		        ));	
+				if($post_id > 0) {
+					$post_list = array();
+					$post_list = explode(',', $_POST['postId']);
+					$post_list[] = $post_id;
+					$post_list = array_filter(array_unique($post_list));
+					$settings['postId'] = implode(',', $post_list);
+					$this->message = 'One Sport Events page created and settings saved successfully';
+				}
+				$autosave = true;
+			}
+
 			// Form Processing
-			if(!empty($_POST['save'])) {
-				$settings = array();
+			if(!empty($_POST['save']) || $autosave) {
+				if(!$autosave) {
+					$settings['postId'] = $_POST['postId'];
+					$this->message = 'Settings saved successfully...';
+				}
 				$settings['WebKey'] = $_POST['WebKey'];
 				$settings['stylesheet'] = $_POST['stylesheet'];
 				$settings['path'] = $_POST['path'];
@@ -182,11 +248,7 @@ if( !class_exists('OneSportEvent') )
 				$settings['keyWord'] = $_POST['keyWord'];
 				$settings['extraParam'] = $_POST['extraParam'];
 				$this->saveSettings($settings);
-				$this->message = 'Settings saved successfully...';
 			}
-
-			$settings = array();
-			$this->getSettings($settings);
 
 			if(!empty($this->message)) { echo '<!-- Last Message --><div id="message" class="updated fade"><p style="color:green;">'.stripslashes($this->message).'</p></div>'; } else { echo '<div id="message" class="updated" style="display: none;"></div>'; }
 ?>
@@ -197,18 +259,31 @@ if( !class_exists('OneSportEvent') )
 					<table class="form-table">
 						<tr>
 							<th width="20%" scope="row" valign="top">Your API WebKey</th>
-							<td width="80%"><input name="WebKey" type="text" value="<?php echo $settings['WebKey'];?>"  size="60"/></td>
+							<td width="80%"><input name="WebKey" type="text" value="<?php echo $settings['WebKey'];?>"  size="60"/><a href="http://www.onesportevent.com/get-widget-key" title="Get Webkey" style="text-decoration:none;font-weight:bold;margin-left:10px;" target="_blank">Get Webkey</a></td>
 						</tr>
 						<tr>
 							<th width="20%" scope="row" valign="top">OneSportEvent API Url</th>
 							<td width="80%"><input name="path" type="text" value="<?php echo $settings['path'];?>"  size="60"/></td>
 						</tr>
 						<tr>
-							<th width="20%" scope="row" valign="top">Stylesheet for OneSportEvent Canvas</th>
+							<th width="20%" scope="row" valign="top">Stylesheet for branding your events (default is ours)</th>
 							<td width="80%"><input name="stylesheet" type="text" value="<?php echo $settings['stylesheet'];?>"  size="60"/></td>
 						</tr>
 					</table>
-					<h2>One Sport Event - Optional Parameters</h2>
+					<h2>One Sport Event - Create Event Page to show events</h2>
+					<br class="clear" />
+					<p style="margin-left:1em;">
+						<input type="submit" name="create" value="Create New Event Page" class="button" />
+					</p>
+					<?php if($settings['postId'] != '') { ?>
+					<table class="form-table">
+						<tr>
+							<th width="30%" scope="row" valign="top">Enable API on pages/posts with ID<br/><small style="color:red;">Please ignore this if you are not sure what this is!</small></th>
+							<td width="70%"><input name="postId" type="text" value="<?php echo $settings['postId'];?>"  size="20"/></td>
+						</tr>
+					</table>
+					<?php } ?>
+					<h2 style="float:left;">One Sport Event - Optional Parameters</h2><a href="http://www.onesportevent.com/event-api-doc.htm" title="Visit configuration documentation" style="float:left; font-weight:bold; margin-top:25px; text-decoration:none;" target="_blank">Visit configuration documentation</a>
 					<table class="form-table">
 						<tr>
 							<th width="40%" scope="row" valign="top" style="text-align:right;">Display the Activities panel filter</th>
@@ -298,4 +373,7 @@ if( !class_exists('OneSportEvent') )
 // Run The Plugin!
 if( class_exists('OneSportEvent') ){
 	$events = new OneSportEvent();
+	add_action( 'admin_notices', array($events,'create_page') );
 }
+
+?>
