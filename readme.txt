@@ -3,7 +3,7 @@ Contributors: http://www.onesportevent.com/about-us
 Tags: onesportevent, sport, event
 Requires at least: 2.7
 Tested up to: 3.0.1
-Stable tag: 2.3
+Stable tag: 2.4.0
 
 OneSport Event creates instant content for your web visitors to browse so they spend more time on your website and are more likely to come back.
 

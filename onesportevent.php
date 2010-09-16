@@ -5,7 +5,7 @@
  * Description: Display Sport events (running, cyclying, triathalon etc) from OneSportEvent.com 
  * Author: sporty - sport@onesportevent.com
  * Author URI: http://www.onesportevent.com/about-us
- * Version: 2.3
+ * Version: 2.4.0
  * 
  * CHANGELOG
  * 2.3   - Fixed up typos and screenshots
