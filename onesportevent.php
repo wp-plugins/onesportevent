@@ -5,9 +5,10 @@
  * Description: Display Sport events (running, cyclying, triathalon etc) from OneSportEvent.com 
  * Author: sporty - sport@onesportevent.com
  * Author URI: http://www.onesportevent.com/about-us
- * Version: 2.2
+ * Version: 2.3
  * 
  * CHANGELOG
+ * 2.3   - Fixed up typos and screenshots
  * 2.0   - Improved admin screen - reminder message added so people know they have to click 'create page'
  * 1.9   - UPDAT - Improved on screen instructions, now api v5
  * 1.8	 - INFO  - Updated in WordPress Plugin repository, works with OneSportEvent API Version 4.
