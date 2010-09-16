@@ -1,10 +1,9 @@
 === One Sport Event ===
-Contributors: www.OneSportEvent.com/AboutUs.aspx
-Donate link: http://onesportevent.com/plugins/default.aspx
+Contributors: http://www.onesportevent.com/about-us
 Tags: onesportevent, sport, event
 Requires at least: 2.7
 Tested up to: 3.0.1
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 
 OneSport Event creates instant content for your web visitors to browse so they spend more time on your website and are more likely to come back.
 
@@ -17,16 +16,16 @@ Events come from a free shared database which you can add and edit, and the plug
 Features are
 
 * Easy and instantly available.  Install the plug-in and events appear on your website instantly
-* Flexible – configure which areas, event types and activities you want to see
-* Always updated – as event organizers have one place to maintain events for multiple websites
-* Event details – also drill through to specific event details, still on your website!
-* Multiple filtering options – onroad, offroad, cycling, running, triathlon, you name it!
-* Valid XHTML – Valid CSS based output works with all web browsers
-* Club events – promote your club events for free on multiple web sites
-* No data charges– content is served directly from the shared web server to your customer
-* High performance – your website renders first and multiple connections allow parallel downloads
+* Flexible - configure which areas, event types and activities you want to see
+* Always updated - as event organizers have one place to maintain events for multiple websites
+* Event details - also drill through to specific event details, still on your website!
+* Multiple filtering options - onroad, offroad, cycling, running, triathlon, you name it!
+* Valid XHTML - Valid CSS based output works with all web browsers
+* Club events - promote your club events for free on multiple web sites
+* No data charges - content is served directly from the shared web server to your customer
+* High performance - your website renders first and multiple connections allow parallel downloads
 * Internet, MSN and telephone support, just drop me a line for my personal MSN
-* Map integration – Coming soon! – drill through to see an events actual course route on the map
+* Map integration - Coming soon! - drill through to see an events actual course route on the map
 
 Information on events plug-in is now available from my website - 
 http://www.onesportevent.com/get-free-event-calendar-widget-on-your-website/
@@ -38,13 +37,13 @@ http://www.onesportevent.com/get-free-mapping-tool-for-your-website/
 
 1. Upload the entire 'onesportevent' directory to `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. From Setting, One Sport Event, choose 'create new event page' and configure the settings how you want them.
+3. From Settings, choose One Sport Event, then choose 'create new event page' and configure the settings how you want them.  Be sure to get an API get also, the link is on that page.
 
 == Frequently Asked Questions ==
 
 = How do events get into the database? = 
 
-Event organisers and clubs maintain the list of events in the shared database from http://www.onesportvent.com/promote-event.  If you want to add your own public or private event you can (although the adding event functionality is designed for event organisers and clubs and is not a full on event management system!).  None the less, and you have lot of flexibility including a full editor allowing you to use bolding, tables, layout, colours and pictures or maps in your event descriptions.
+Event organisers and clubs maintain the list of events in the shared database from http://www.onesportevent.com/promote-event.  If you want to add your own public or private event you can (although the adding event functionality is designed for event organisers and clubs and is not a full on event management system!).  None the less, and you have lot of flexibility including a full editor allowing you to use bolding, tables, layout, colours and pictures or maps in your event descriptions.
 
 = What about my clubs events? = 
 
