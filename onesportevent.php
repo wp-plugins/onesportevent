@@ -1,16 +1,16 @@
 <?php
 /**
  * Plugin Name: One Sport Event
- * Plugin URI: http://www.onesportevent.com
- * Description: WordPress Plugin to display Sport events from OneSportEvent.com using their API.
+ * Plugin URI: http://www.onesportevent.com/get-free-event-calendar-widget-on-your-website/
+ * Description: Display Sport events (running, cyclying, triathalon etc) from OneSportEvent.com 
  * Author: sporty - sport@onesportevent.com
- * Author URI: www.OneSportEvent.com/AboutUs.aspx
+ * Author URI: http://www.onesportevent.com/about-us
  * Version: 2.2
  * 
  * CHANGELOG
- * 2.2   - Improved admin screen - reminder message added so people know they have to click 'create page'
- * 2.1   - UPDAT - Improved on screen instructions
- * 2.0	 - INFO  - Updated in WordPress Plugin repository, works with OneSportEvent API Version 4.
+ * 2.0   - Improved admin screen - reminder message added so people know they have to click 'create page'
+ * 1.9   - UPDAT - Improved on screen instructions, now api v5
+ * 1.8	 - INFO  - Updated in WordPress Plugin repository, works with OneSportEvent API Version 4.
  * 1.1   - ADDED - Ability to create event page via plugin admin page
  *       - UPDAT - Updated API urls
  * 1.0   - ADDED - Detailed documentation - readme.doc
