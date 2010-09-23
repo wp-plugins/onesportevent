@@ -1,13 +1,14 @@
 <?php
 /**
- * Plugin Name: One Sport Event
+ * Plugin Name: One Sport - Event Calendar
  * Plugin URI: http://www.onesportevent.com/get-free-event-calendar-widget-on-your-website/
  * Description: Display Sport events (running, cyclying, triathalon etc) from OneSportEvent.com 
  * Author: sporty - sport@onesportevent.com
  * Author URI: http://www.onesportevent.com/about-us
- * Version: 2.4.0
+ * Version: 2.5.0
  * 
  * CHANGELOG
+ * 2.5	 - Improved descriptions
  * 2.3   - Fixed up typos and screenshots
  * 2.0   - Improved admin screen - reminder message added so people know they have to click 'create page'
  * 1.9   - UPDAT - Improved on screen instructions, now api v5
@@ -167,26 +168,20 @@ if( !class_exists('OneSportEvent') )
 			$settings = array();
 			$this->getSettings($settings);
 			$findme   = 'id="oseEventCanvas"';
-			$page_set = 0;
-			$sql_check_page="SELECT * FROM wp_posts where post_type='page' and id='".$settings['postId']."' 
-							 and post_status='publish' ";
-			$result_check_page=mysql_query($sql_check_page);
-			while($row_check_page=mysql_fetch_array($result_check_page)){
-			
-					$mystring = $row_check_page['post_content'];
-					$pos = strpos($mystring, $findme);
-					// Note our use of ===.  Simply == would not work as expected
-					// because the position of 'a' was the 0th (first) character.
-					if ($pos > 0) {
-    					$page_set = 1;
-					}	
-				}
-			if($page_set == 0){
-				echo "<div id='message' class='updated fade'>
-					  <p><b>OneSportEvents is installed</b>.  You'll need to <a href='options-general.php?page=onesportevent/onesportevent.php'>create a page</a> and configure any optional parameters before your events will display on your website.  You can also see a <a href='http://api.onesportevent.com/api/event/video'>video</a> on how to configure the optional parameters.
-</p>
-					  </div>";
+
+			$page_data = get_page( $settings['postId'] );	// Get page info
+			$content = $page_data->post_content;			// Get content
+			$pos = strpos($content, $findme);				// Search content for placeholder
+
+			if ($pos > 0) {
 			}
+			else
+			{
+			// You can also see a <a href='http://onesportevent.com/api/event/video'>video</a> on how to configure the optional parameters
+				echo "<div id='message' class='updated fade'>
+					  <p><b>OneSportEvents is installed</b>.  You'll need to <a href='options-general.php?page=onesportevent/onesportevent.php'>go to the configuration</a>, <strong>create a page</strong> and configure any optional parameters before your events will display on your website.  Please email sport@onesportevent.com if you can't get the event styling looking how you want it, or to request new features.</p></div>";
+			}
+
 		}
 		
 		function manageSettings() {
@@ -267,7 +262,7 @@ if( !class_exists('OneSportEvent') )
 							<td width="80%"><input name="path" type="text" value="<?php echo $settings['path'];?>"  size="60"/></td>
 						</tr>
 						<tr>
-							<th width="20%" scope="row" valign="top">Stylesheet for branding your events (default is ours)</th>
+							<th width="20%" scope="row" valign="top">Stylesheet for branding your events (default is common)</th>
 							<td width="80%"><input name="stylesheet" type="text" value="<?php echo $settings['stylesheet'];?>"  size="60"/></td>
 						</tr>
 					</table>
@@ -284,7 +279,7 @@ if( !class_exists('OneSportEvent') )
 						</tr>
 					</table>
 					<?php } ?>
-					<h2 style="float:left;">One Sport Event - Optional Parameters</h2><a href="http://www.onesportevent.com/event-api-doc.htm" title="Visit configuration documentation" style="float:left; font-weight:bold; margin-top:25px; text-decoration:none;" target="_blank">Visit configuration documentation</a>
+					<h2 style="float:left;">One Sport Event - Optional Parameters</h2><a href="http://www.onesportevent.com/event-api-documentation/" title="Visit configuration documentation" style="float:left; font-weight:bold; margin-top:25px; text-decoration:none;" target="_blank">Visit configuration documentation</a>
 					<table class="form-table">
 						<tr>
 							<th width="40%" scope="row" valign="top" style="text-align:right;">Display the Activities panel filter</th>
