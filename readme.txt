@@ -4,24 +4,23 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: event calendar, event, calendar, upcoming events, sidebar, events, sport, date, time, event scheduling, promote event, displaying events, event widget, events wordpress, simple events, widget, event page, event post, club, ajax
 Requires at least: 2.7
 Tested up to: 3.0.1
-Stable tag: 2.5.0
+Stable tag: 2.6.0
 
 OneSport Event Calendar gives you an instant event calendar with popular events.  Can also be used to list and promote certain types of club-only events
 
 == Description ==
 
+Easily get event listings for sporting events and athletic or multisport type races (e.g. half marathons, swimming, cycling, orienteering, kayaking, ironman and triathlon etc) from your local region.
+
+First see http://www.onesportevent.com/events or http://www.wmc.org.nz/ (events tab) for a couple of live examples.  If you'd like this functionality too then install the plug-in.  
+
 Creates instant content for your web visitors to browse so they spend more time on your website and are more likely to come back.
 
-See a live example on www.onesportevent.com/events - You can use your own stylsheet of course; if your not a stylesheet expert don't
-worry just email me a link to it installed on your site and I'll help.
-
-Easily get event listings for sporting events and athletic or multisport type races (e.g. half marathons, swimming, cycling, orienteering, kayaking, ironman and triathlon etc) from your local region.
+The event calendars default style is defined by css, and you can use your own stylsheet of course; post a forum message on www.onesportevent.com if you need help or if you have improvement suggestions.
 
 Events come from a free shared database which you can add and edit, and the plug-in allows you to specify your own CSS so you can have full control over the styling, branding and functionality.  The administration options allows you to customise which events are displayed and to enable/disable different user filtering functionality.
 
 Can also be used to list your members club-only events **if** you have an event that is one of the activities in the FAQ section.  It's not intended as a full on event management system!  But the nice thing is you can optionally promote your club events for free on an entire network of websites so more people are likely to see your club event and come along.
-
-Please note the event calendar comes with a predefined style which you may need to change, so that it fits with your websites branding.  Drop me an email if you have problems so I can ensure the default style works out of the box for most people.
 
 Features are
 
@@ -41,7 +40,7 @@ Information on events plug-in is now available from my website -
 http://www.onesportevent.com/get-free-event-calendar-widget-on-your-website/
 
 Same goes for my mapping plug-in, which is very cool!
-http://www.onesportevent.com/get-free-mapping-tool-for-your-website/
+http://wordpress.org/extend/plugins/one-sport-route-mapper/
 
 == Installation ==
 
@@ -98,6 +97,9 @@ http://www.onesportevent.com/get-free-event-calendar-widget-on-your-website/
 http://www.onesportevent.com/event-calendar-download/
 
 == Changelog ==
+= Version 2.6 =
+Improved API performance.
+
 = Version 2.5 =
 As identified by Will Chapman (thanks), didn't work if your installations didn't use the default wp_ prefix for tables.  Fixed up errors in linking on the admin screen, and installation problems.  Added cleanup of settings on uninstall.  Improved shared stylesheet.
 
@@ -125,4 +127,4 @@ Decided to automate the process so it is simple, let me know if your experience 
 2. Administration Screen
 
 == Upgrade Notice ==
-OneSport - Event Calendar has been massively upgraded with a new design, professional drawn icons and logos, easier setup and more options.  Latest revision improves stylesheet and fixes issues where it would not install unless you had wp_ prefix tables.  API docs also now available.
+OneSport - Event Calendar has had an API upgrade to improve performance.
