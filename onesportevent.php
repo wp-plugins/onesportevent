@@ -5,9 +5,10 @@
  * Description: Display Sport events (running, cyclying, triathalon etc) from OneSportEvent.com 
  * Author: sporty - sport@onesportevent.com
  * Author URI: http://www.onesportevent.com/about-us
- * Version: 2.6.0
+ * Version: 2.7.0
  * 
  * CHANGELOG
+ * 2.7   - Added new date filter
  * 2.6	 - Improved API Performance
  * 2.5	 - Improved descriptions
  * 2.3   - Fixed up typos and screenshots

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: event calendar, event, calendar, upcoming events, sidebar, events, sport, date, time, event scheduling, promote event, displaying events, event widget, events wordpress, simple events, widget, event page, event post, club, ajax
 Requires at least: 2.7
 Tested up to: 3.0.1
-Stable tag: 2.6.0
+Stable tag: 2.7.0
 
 OneSport Event Calendar gives you an instant event calendar with popular events.  Can also be used to list and promote certain types of club-only events
 
@@ -97,6 +97,9 @@ http://www.onesportevent.com/get-free-event-calendar-widget-on-your-website/
 http://www.onesportevent.com/event-calendar-download/
 
 == Changelog ==
+= Version 2.7 =
+Added new date filter, fixed bug where ampersands in event description not displayed correctly, added new Aquathlon event type, added year to date display
+
 = Version 2.6 =
 Improved API performance.
 
@@ -127,4 +130,4 @@ Decided to automate the process so it is simple, let me know if your experience 
 2. Administration Screen
 
 == Upgrade Notice ==
-OneSport - Event Calendar has had an API upgrade to improve performance.
+OneSport - Event Calendar has had a new date filter added. It can be hidden or displayed in the configuration settings.
