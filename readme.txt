@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: event calendar, event, calendar, upcoming events, sidebar, events, sport, date, time, event scheduling, promote event, displaying events, event widget, events wordpress, simple events, widget, event page, event post, club, ajax
 Requires at least: 2.7
 Tested up to: 3.0.1
-Stable tag: 2.7.0
+Stable tag: 2.8.0
 
 OneSport Event Calendar gives you an instant event calendar with popular events.  Can also be used to list and promote certain types of club-only events
 
@@ -97,6 +97,9 @@ http://www.onesportevent.com/get-free-event-calendar-widget-on-your-website/
 http://www.onesportevent.com/event-calendar-download/
 
 == Changelog ==
+= Version 2.8 =
+Complete overall of the styling and layout system.  Now has automatic flexible layout so it fits in most themese and I've included some extra options instant styling of key elements (you can still define your own look and feel completly by using css)
+
 = Version 2.7 =
 Added new date filter, fixed bug where ampersands in event description not displayed correctly, added new Aquathlon event type, added year to date display
 
@@ -107,7 +110,6 @@ Improved API performance.
 As identified by Will Chapman (thanks), didn't work if your installations didn't use the default wp_ prefix for tables.  Fixed up errors in linking on the admin screen, and installation problems.  Added cleanup of settings on uninstall.  Improved shared stylesheet.
 
 = Version 2.0 =
-
 Realised most people were stuggling to get version 1 working as you had to configure the an HTML placeholder in the right place on your site, and apologies, I didn't document how to do that well ;-)
 
 Decided to automate the process so it is simple, let me know if your experience is anything less than perfect.
@@ -130,4 +132,4 @@ Decided to automate the process so it is simple, let me know if your experience 
 2. Administration Screen
 
 == Upgrade Notice ==
-OneSport - Event Calendar has had a new date filter added. It can be hidden or displayed in the configuration settings.
+OneSport - Massive changes to allow fluid layout and better styling.

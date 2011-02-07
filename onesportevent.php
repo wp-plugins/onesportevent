@@ -5,9 +5,10 @@
  * Description: Display Sport events (running, cyclying, triathalon etc) from OneSportEvent.com 
  * Author: sporty - sport@onesportevent.com
  * Author URI: http://www.onesportevent.com/about-us
- * Version: 2.7.0
+ * Version: 2.8.0
  * 
  * CHANGELOG
+ * 2.8   - Bug with keyword fixed; automatic flexible layout introduced; extra instant styling options
  * 2.7   - Added new date filter
  * 2.6	 - Improved API Performance
  * 2.5	 - Improved descriptions
@@ -69,6 +70,8 @@ if( !class_exists('OneSportEvent') )
 			$settings = array();
 			$settings['includeCrumb'] = 1;
 			$settings['includeAreas'] = 1;
+			$settings['styleHideBorders'] = 0;
+			$settings['styleHideImage'] = 0;
 			$this->saveSettings($settings);
 		}
 
@@ -92,7 +95,7 @@ if( !class_exists('OneSportEvent') )
 				echo "<link rel='stylesheet' href='" . $settings['stylesheet'] . "' type='text/css' media='screen' />\n";
 			}
 
-			$optional_parameters_boolean = array('activityPanel','eventPanel','stylePanel','datePanel','searchPanel','includeCrumb','includeAreas');
+			$optional_parameters_boolean = array('activityPanel','eventPanel','stylePanel','datePanel','searchPanel','includeCrumb','includeAreas', 'styleHideBorders', 'styleHideImage');
 			$optional_parameters_integer = array('pageNo','perPage');
 			$optional_parameters = array('oseActivities','oseEvents','oseStyles','afterDate','keyWord', 'clubID');
 
@@ -127,6 +130,28 @@ if( !class_exists('OneSportEvent') )
 			echo "});";
 
 			echo "</script>\n";
+
+
+			$style_string = '';
+
+			if($settings['styleRed'] != '') {
+			   $style_string .= ".osered { color: " . $settings['styleRed'] . " !important; }";
+			}
+
+			if($settings['styleText'] != '') {
+			   $style_string .= "#oseMaster a, #oseMaster p, #oseMaster ul, #oseMaster li, #oseMaster ol { color: " . $settings['styleText'] . " !important; }";
+			}
+
+			if($settings['styleMainBackground'] != '') {
+			   $style_string .= ".oseleft_block { background: " . $settings['styleMainBackground'] . " !important; }";
+			}
+
+			if( $style_string != '' ) {
+				echo "<style type='text/css'>";
+				echo $style_string;
+				echo "</style>\n";
+			}
+
 			echo "<!-- /OneSportEvent Plugin - stylesheet and API link. -->\n";
 		}
 
@@ -139,10 +164,10 @@ if( !class_exists('OneSportEvent') )
 			$settings = unserialize(get_option('onesportevent_settings'));
 			// Default Values
 			if($settings['path'] == '') {
-				$settings['path'] = 'http://api.onesportevent.com/api/event/v5/EventAPI.aspx';
+				$settings['path'] = 'http://api.onesportevent.com/api/event/v6/EventAPI.aspx';
 			}
 			if($settings['stylesheet'] == '') {
-				$settings['stylesheet'] = 'http://api.onesportevent.com/api/style/v1/css/osestyle.css';
+				$settings['stylesheet'] = 'http://api.onesportevent.com/api/style/v2/css/osestyle.css';
 			}
 
 			return;
@@ -236,6 +261,8 @@ if( !class_exists('OneSportEvent') )
 				$settings['oseEvents'] = $_POST['oseEvents'];
 				$settings['oseStyles'] = $_POST['oseStyles'];
 				$settings['oseAreaLevel'] = $_POST['oseAreaLevel'];
+				$settings['styleHideBorders'] = ($_POST['styleHideBorders'] == 'on') ? 1 : 0;
+				$settings['styleHideImage'] = ($_POST['styleHideImage'] == 'on') ? 1 : 0;
 				$settings['oseAreaID'] = $_POST['oseAreaID'];
 				$settings['clubID'] = $_POST['clubID'];
 				$settings['afterDate'] = $_POST['afterDate'];
@@ -245,6 +272,12 @@ if( !class_exists('OneSportEvent') )
 				$settings['perPage'] = $_POST['perPage'];
 				$settings['keyWord'] = $_POST['keyWord'];
 				$settings['extraParam'] = $_POST['extraParam'];
+
+				/* colour styles */
+				$settings['styleRed'] = $_POST['styleRed'];
+				$settings['styleText'] = $_POST['styleText'];
+				$settings['styleMainBackground'] = $_POST['styleMainBackground'];
+
 				$this->saveSettings($settings);
 			}
 
@@ -308,7 +341,7 @@ if( !class_exists('OneSportEvent') )
 							<td width="60%"><?php echo $this->getAreaLevelList($settings['oseAreaLevel']);?></td>
 						</tr>
 						<tr>
-							<th width="40%" scope="row" valign="top" style="text-align:right;">Enter Area ID<br/><small>(CountryID, CityID or RegionID you wish to default the view to)</small></th>
+							<th width="30%" scope="row" valign="top" style="text-align:right;">Enter Area ID<br/><small>The <a style="background-color: transparent;" target="_blank" href="http://www.onesportevent.com/route-mapping-api-documentation/#regions">number</a> of the CountryID, CityID or RegionID you wish to default the view to</small></th>
 							<td width="60%"><input name="oseAreaID" type="text" value="<?php echo $settings['oseAreaID'];?>" /></td>
 						</tr>
 						<tr>
@@ -316,15 +349,15 @@ if( !class_exists('OneSportEvent') )
 							<td width="60%"><input name="clubID" type="text" value="<?php echo $settings['clubID'];?>" /></td>
 						</tr>
 						<tr>
-							<th width="40%" scope="row" valign="top" style="text-align:right;">A comma separated list of activity codes to display.<br/><small>e.g. '1,3' - Displays running and walking activities only</small></th>
+							<th width="40%" scope="row" valign="top" style="text-align:right;">A comma separated list of <a href="http://www.onesportevent.com/route-mapping-api-documentation/#optionalparameters" title="See configuration documentation" style="font-weight:bold; text-decoration:none;" target="_blank">activity codes</a> to display.<br/><small>e.g. '1,3' - Displays running and walking activities only.  Leave empty for all activities</small></th>
 							<td width="60%"><input name="oseActivities" type="text" value="<?php echo $settings['oseActivities'];?>" /></td>
 						</tr>
 						<tr>
-							<th width="40%" scope="row" valign="top" style="text-align:right;">A comma separated list of event codes to display.<br/><small>e.g. '2,3' - Displays 10km and Half Marathon events only</small></th>
+							<th width="40%" scope="row" valign="top" style="text-align:right;">A comma separated list of event codes to display.<br/><small>e.g. '2,3' - Displays 10km and Half Marathon events only.  Leave empty for all events</small></th>
 							<td width="60%"><input name="oseEvents" type="text" value="<?php echo $settings['oseEvents'];?>" /></td>
 						</tr>
 						<tr>
-							<th width="40%" scope="row" valign="top" style="text-align:right;">A comma separated list of style codes to display.<br/><small>e.g. '2,3' - Offroad and mountain events only</small></th>
+							<th width="40%" scope="row" valign="top" style="text-align:right;">A comma separated list of style codes to display.<br/><small>e.g. '2,3' - Offroad and mountain events only.  Leave empty for all styles</small></th>
 							<td width="60%"><input name="oseStyles" type="text" value="<?php echo $settings['oseStyles'];?>" /></td>
 						</tr>
 						<tr>
@@ -356,6 +389,32 @@ if( !class_exists('OneSportEvent') )
 							<td width="60%"><input name="extraParam" type="text" value="<?php echo $settings['extraParam'];?>" /></td>
 						</tr>
 					</table>
+					
+					<div class="updated fade" id="stylingoptions" style="background-color: #FFFBCC"><p style="color: blue;">Use your own stylesheet link above to completely define your own look and feel, or instead use these quick styling options for minor changes</p></div>
+
+					<table class="form-table">
+						<tr>
+							<th width="30%" scope="row" valign="top" style="text-align:right;">Hilight Text<br/><small>e.g. number of events per area, event date.  Suggested value #EB6909</small></th>
+							<td width="70%"><input name="styleRed" type="text" value="<?php echo $settings['styleRed'];?>" /></td>
+						</tr>
+						<tr>
+							<th width="30%" scope="row" valign="top" style="text-align:right;">Normal Text<br/><small>e.g. text in lists, paragraphs and links.  Suggested value #404041</small></th>
+							<td width="70%"><input name="styleText" type="text" value="<?php echo $settings['styleText'];?>" /></td>
+						</tr>
+						<tr>
+							<th width="30%" scope="row" valign="top" style="text-align:right;">Main panel background<br/><small>e.g. Suggested value white (#FFFFFF), transparent or use an image</small></th>
+							<td width="70%"><input name="styleMainBackground" type="text" value="<?php echo $settings['styleMainBackground'];?>" /></td>
+						</tr>
+						<tr>
+							<th width="30%" scope="row" valign="top" style="text-align:right;">Tick to hide the white borders<br/><small>On dark backgrounds if may look better to change border colors using css, or use this to turn borders off completely.</small></th>
+							<td width="70%"><input name="styleHideBorders" type="checkbox" <?php echo ($settings['styleHideBorders']) ? "checked" : "";?> /></td>
+						</tr>
+						<tr>
+							<th width="30%" scope="row" valign="top" style="text-align:right;">Hide activity image<br/><small>Hides the running, walking, cycling.. etc image </small></th>
+							<td width="70%"><input name="styleHideImage" type="checkbox" <?php echo ($settings['styleHideImage']) ? "checked" : "";?> /></td>
+						</tr>
+					</table>
+
 					<p style="text-align: center;">
 						<input type="submit" name="save" value="Save Settings" class="button" />&nbsp;&nbsp;
 						<input type="button" name="cancel" value="Cancel" class="button" onclick="javascript:history.go(-1)" />
